@@ -21,9 +21,9 @@ The first version will focus on a small, usable set of features:
 
 | Stage | Focus | Status |
 |---|---|---|
-| 1 | Define the product scope and user flows | In progress |
-| 2 | Choose the application stack and set up the project | Planned |
-| 3 | Build title browsing and detail pages | Planned |
+| 1 | Define the product scope and user flows | Complete |
+| 2 | Choose the application stack and set up the project | In progress |
+| 3 | Build title browsing and detail pages | In progress |
 | 4 | Add watchlists and user activity | Planned |
 | 5 | Add ratings, reviews, and social discovery | Planned |
 | 6 | Add tests, deployment configuration, and documentation | Planned |
@@ -37,7 +37,7 @@ The first version will focus on a small, usable set of features:
 
 ## Current status
 
-This repository is at the initial planning stage. The implementation stack and data source for movie/show metadata have not yet been selected.
+The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data; external metadata integration, accounts, watchlists, and reviews are future stages.
 
 ## Contributing and development
 
