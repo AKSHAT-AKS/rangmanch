@@ -15,9 +15,12 @@ public class TitleController {
     }
 
     @GetMapping("/")
-    public String home(@RequestParam(required = false) String q, Model model) {
-        model.addAttribute("titles", catalogService.search(q));
+    public String home(@RequestParam(required = false) String q,
+                       @RequestParam(required = false) TitleType type, Model model) {
+        model.addAttribute("titles", catalogService.search(q, type));
         model.addAttribute("query", q == null ? "" : q);
+        model.addAttribute("selectedType", type);
+        model.addAttribute("types", TitleType.values());
         return "titles";
     }
 
