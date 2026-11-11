@@ -23,8 +23,8 @@ Rangmanch is a social discovery space for movies and television shows. The first
 - As a registered user, I can remove a title from my list.
 
 ### Community
-- As a registered user, I can rate a title.
-- As a registered user, I can write, edit, and delete my own review.
+- As a visitor, I can submit a display-name rating for a title in the prototype.
+- As a visitor, I can submit a short review in the prototype. Editing and deleting reviews require accounts and are deferred.
 - As a visitor, I can read public reviews.
 
 ## 4. MVP boundaries
@@ -68,14 +68,22 @@ A user should have at most one watchlist entry per title and at most one active 
 6. Implement ratings and reviews.
 7. Add integration tests, deployment configuration, and user documentation.
 
-## 8. Open technical decisions
+## 8. Current implementation decisions
 
-These decisions should be made before the implementation begins:
+- **Backend and UI:** Java 21, Spring Boot 3.5, Spring MVC, and Thymeleaf.
+- **Persistence:** Spring Data JPA with H2 for local development; PostgreSQL is available as a runtime dependency for a later deployment profile.
+- **Catalogue source:** local seed data for the first working version. No external provider or API key is required yet.
+- **Watchlist:** browser-session storage for the prototype; it is not persistent across sessions or devices.
+- **Reviews:** stored in the database with a display name, 1–5 rating, body, and creation timestamp. Reviews are not associated with verified accounts and have no moderation controls.
+- **Authentication and deployment:** deliberately deferred. The prototype must not be exposed publicly with untrusted submissions until authentication, authorization, rate limiting, and moderation are implemented.
 
-- Backend and frontend framework.
-- Database and migration tool.
-- External movie/series metadata provider and its terms.
-- Authentication approach.
-- Deployment target.
+Keep any future metadata provider behind a service interface and store API credentials in environment variables, never in source files.
 
-Do not hard-code an external API key. Keep provider integration behind a small service interface so it can be replaced later.
+## 9. Remaining MVP work
+
+1. Add registration and login.
+2. Persist watchlist entries per user, including planned/watching/watched status.
+3. Associate reviews with authenticated users and support editing/deletion.
+4. Add abuse prevention and moderation controls.
+5. Choose and integrate a metadata provider after reviewing its terms.
+6. Add database migrations and deployment configuration.
