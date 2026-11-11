@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My watchlist — Rangmanch</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header class="topbar"><a class="brand" th:href="@{/}">rangmanch<span>.</span></a><a class="back" th:href="@{/}">← Discover titles</a></header>
+<main class="container catalogue-page">
+  <section class="section-heading"><div><p class="eyebrow">YOUR PERSONAL COLLECTION</p><h1>My watchlist</h1><p class="intro">Keep the stories you want to come back to in one place.</p></div></section>
+  <p class="notice" th:if="${message}" th:text="${message}"></p>
+  <div class="grid" th:if="${!titles.isEmpty()}">
+    <div class="card" th:each="title : ${titles}">
+      <span class="type" th:text="${title.type}">MOVIE</span><h3 th:text="${title.name}">Title</h3>
+      <p class="meta"><span th:text="${title.releaseYear}">2024</span><span>·</span><span th:text="${title.genre}">Drama</span></p>
+      <a class="open-link" th:href="@{/titles/{id}(id=${title.id})}">View details ↗</a>
+      <form method="post" th:action="@{/watchlist/{id}/remove(id=${title.id})}"><button class="remove-button" type="submit">Remove</button></form>
+    </div>
+  </div>
+  <div class="empty" th:if="${titles.isEmpty()}"><h3>Your watchlist is empty</h3><p>Browse the catalogue and save titles you want to watch.</p><a class="button" th:href="@{/}">Explore titles</a></div>
+  <p class="session-note">This early version stores the watchlist in your current browser session. It is not yet linked to a registered account.</p>
+</main>
+<footer>Rangmanch · Discover. Track. Discuss.</footer>
+</body></html>
