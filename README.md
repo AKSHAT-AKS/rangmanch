@@ -12,6 +12,8 @@ The first version will focus on a small, usable set of features:
 
 - Browse and search for movies and shows.
 - View a title page with basic details.
+- Filter the catalogue by movie or series.
+- Save titles to a session-based watchlist and remove them later.
 - Create a personal watchlist.
 - Mark titles as watched or currently watching.
 - Rate titles and write short reviews.
@@ -24,7 +26,7 @@ The first version will focus on a small, usable set of features:
 | 1 | Define the product scope and user flows | Complete |
 | 2 | Choose the application stack and set up the project | In progress |
 | 3 | Build title browsing and detail pages | In progress |
-| 4 | Add watchlists and user activity | Planned |
+| 4 | Add watchlists and user activity | In progress |
 | 5 | Add ratings, reviews, and social discovery | Planned |
 | 6 | Add tests, deployment configuration, and documentation | Planned |
 
@@ -37,7 +39,7 @@ The first version will focus on a small, usable set of features:
 
 ## Current status
 
-The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data; external metadata integration, accounts, watchlists, and reviews are future stages.
+The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data; external metadata integration, registered accounts, persistent user watchlists, watched/currently-watching status, and reviews are future stages. The current watchlist is stored in the browser session and will be cleared when that session ends.
 
 ## Contributing and development
 
