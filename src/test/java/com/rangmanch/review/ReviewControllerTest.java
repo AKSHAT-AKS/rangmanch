@@ -58,8 +58,13 @@ class ReviewControllerTest {
     }
 
     @Test
+    @Transactional
     void detailsPageRendersReviewSection() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk());
+        Title title = titleRepository.saveAndFlush(new Title(
+                "Details Review Test", TitleType.MOVIE, 2025, "Drama", "A test synopsis."));
+        mockMvc.perform(get("/titles/{id}", title.getId()))
+                .andExpect(status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.view()
+                        .name("title-details"));
     }
 }
