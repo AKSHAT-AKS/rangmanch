@@ -29,7 +29,7 @@ class WatchlistControllerTest {
         title = new Title("Interstellar", TitleType.MOVIE, 2014, "Science Fiction", "A space adventure.");
         when(catalogService.findById(1L)).thenReturn(Optional.of(title));
         mockMvc = MockMvcBuilders.standaloneSetup(new WatchlistController(catalogService))
-                .setViewResolvers((viewName, locale) -> org.mockito.Mockito.mock(org.springframework.web.servlet.View.class))
+                .setViewResolvers((viewName, locale) -> viewName.startsWith("redirect:") ? null : org.mockito.Mockito.mock(org.springframework.web.servlet.View.class))
                 .build();
     }
 
