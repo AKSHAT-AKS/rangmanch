@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${title.name} + ' — Rangmanch'">Title — Rangmanch</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body><header class="topbar"><a class="brand" th:href="@{/}">rangmanch<span>.</span></a><a class="back" th:href="@{/}">← Back to discovery</a></header>
+<main class="container detail-wrap"><p class="eyebrow">TITLE DETAILS</p><span class="type" th:text="${title.type}">MOVIE</span><h1 class="detail-title" th:text="${title.name}">Title name</h1><p class="meta"><span th:text="${title.releaseYear}">2024</span><span>·</span><span th:text="${title.genre}">Drama</span></p><p class="synopsis" th:text="${title.synopsis}">Synopsis</p><div class="notice">Watchlists, ratings and community reviews are coming in a later development stage.</div></main><footer>Rangmanch · Discover. Track. Discuss.</footer></body></html>
