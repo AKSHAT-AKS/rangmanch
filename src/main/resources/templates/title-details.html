@@ -2,4 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${title.name} + ' — Rangmanch'">Title — Rangmanch</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
 <body><header class="topbar"><a class="brand" th:href="@{/}">rangmanch<span>.</span></a><a class="back" th:href="@{/watchlist}">My watchlist</a></header>
-<main class="container detail-wrap"><p class="eyebrow">TITLE DETAILS</p><span class="type" th:text="${title.type}">MOVIE</span><h1 class="detail-title" th:text="${title.name}">Title name</h1><p class="meta"><span th:text="${title.releaseYear}">2024</span><span>·</span><span th:text="${title.genre}">Drama</span></p><p class="synopsis" th:text="${title.synopsis}">Synopsis</p><form method="post" th:action="@{/watchlist/{id}(id=${title.id})}"><button class="button" type="submit">＋ Add to watchlist</button></form><div class="notice">Ratings and community reviews are planned for a later development stage.</div></main><footer>Rangmanch · Discover. Track. Discuss.</footer></body></html>
+<main class="container detail-wrap"><p class="eyebrow">TITLE DETAILS</p><span class="type" th:text="${title.type}">MOVIE</span><h1 class="detail-title" th:text="${title.name}">Title name</h1><p class="meta"><span th:text="${title.releaseYear}">2024</span><span>·</span><span th:text="${title.genre}">Drama</span></p><p class="synopsis" th:text="${title.synopsis}">Synopsis</p><form method="post" th:action="@{/watchlist/{id}(id=${title.id})}"><button class="button" type="submit">＋ Add to watchlist</button></form><section id="reviews" class="reviews-section">
+<h2>Community reviews</h2>
+<p class="notice" th:if="${reviewMessage}" th:text="${reviewMessage}"></p>
+<p class="notice" th:if="${reviewError}" th:text="${reviewError}"></p>
+<form class="review-form" method="post" th:action="@{/titles/{id}/reviews(id=${title.id})}" th:object="${reviewForm}">
+<div class="review-fields">
+<label>Your name<input type="text" th:field="*{displayName}" maxlength="60" required placeholder="Display name"></label>
+<label>Rating<select th:field="*{rating}" required><option value="">Choose rating</option><option value="5">5 — Loved it</option><option value="4">4 — Really liked it</option><option value="3">3 — It was good</option><option value="2">2 — Not for me</option><option value="1">1 — Disappointed</option></select></label>
+</div>
+<label>Your review<textarea th:field="*{body}" rows="4" maxlength="1000" required placeholder="What did you think?"></textarea></label>
+<button class="button" type="submit">Post review</button>
+</form>
+<div class="review-list" th:if="${!reviews.isEmpty()}">
+<article class="review-card" th:each="review : ${reviews}">
+<div class="review-heading"><strong th:text="${review.displayName}">Reviewer</strong><span class="review-rating" th:text="${review.rating} + '/5'">5/5</span></div>
+<p th:text="${review.body}">Review text</p>
+<small th:text="${#temporals.format(review.createdAt, 'dd MMM yyyy')}">Date</small>
+</article>
+</div>
+<p class="empty" th:if="${reviews.isEmpty()}">No reviews yet. Be the first to share your thoughts.</p>
+<p class="session-note">Reviews are currently posted under a display name without account verification or moderation. Keep this local until account and moderation controls are added.</p>
+</section></main><footer>Rangmanch · Discover. Track. Discuss.</footer></body></html>
