@@ -28,7 +28,9 @@ class WatchlistControllerTest {
         catalogService = org.mockito.Mockito.mock(TitleCatalogService.class);
         title = new Title("Interstellar", TitleType.MOVIE, 2014, "Science Fiction", "A space adventure.");
         when(catalogService.findById(1L)).thenReturn(Optional.of(title));
-        mockMvc = MockMvcBuilders.standaloneSetup(new WatchlistController(catalogService)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new WatchlistController(catalogService))
+                .setViewResolvers((viewName, locale) -> org.mockito.Mockito.mock(org.springframework.web.servlet.View.class))
+                .build();
     }
 
     @Test
