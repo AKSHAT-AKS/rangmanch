@@ -14,6 +14,7 @@ The first version will focus on a small, usable set of features:
 - View a title page with basic details.
 - Filter the catalogue by movie or series.
 - Save titles to a session-based watchlist and remove them later.
+- Submit a 1–5 rating and a short written review on a title page.
 - Create a personal watchlist.
 - Mark titles as watched or currently watching.
 - Rate titles and write short reviews.
@@ -24,11 +25,11 @@ The first version will focus on a small, usable set of features:
 | Stage | Focus | Status |
 |---|---|---|
 | 1 | Define the product scope and user flows | Complete |
-| 2 | Choose the application stack and set up the project | In progress |
-| 3 | Build title browsing and detail pages | In progress |
+| 2 | Choose the application stack and set up the project | Complete |
+| 3 | Build title browsing and detail pages | Complete |
 | 4 | Add watchlists and user activity | In progress |
-| 5 | Add ratings, reviews, and social discovery | Planned |
-| 6 | Add tests, deployment configuration, and documentation | Planned |
+| 5 | Add ratings and reviews | In progress |
+| 6 | Add tests and documentation | In progress |
 
 ## Design principles
 
@@ -39,7 +40,9 @@ The first version will focus on a small, usable set of features:
 
 ## Current status
 
-The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data; external metadata integration, registered accounts, persistent user watchlists, watched/currently-watching status, and reviews are future stages. The current watchlist is stored in the browser session and will be cleared when that session ends.
+The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data. Users can add and remove titles from a browser-session watchlist and submit a display-name review with a 1–5 rating. The watchlist is cleared when the session ends. External metadata integration, registered accounts, persistent per-user watchlists, watched/currently-watching status, review editing/deletion, moderation, and broader social discovery remain future work.
+
+**Development safety:** Reviews are currently anonymous apart from a user-entered display name and are not moderated. Do not expose this prototype publicly until authentication, authorization, abuse prevention, and moderation are implemented.
 
 ## Contributing and development
 
