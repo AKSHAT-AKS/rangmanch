@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rangmanch — Discover something worth watching</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar"><a class="brand" th:href="@{/}">rangmanch<span>.</span></a><span class="tagline">Stories are better shared.</span></header>
+<main class="container">
+  <section class="hero"><p class="eyebrow">YOUR NEXT WATCH STARTS HERE</p><h1>Find your next<br><span>favourite story.</span></h1><p class="intro">Explore films and series, keep track of what you love, and discover what to watch next.</p>
+    <form class="search" method="get" th:action="@{/}"><input type="search" name="q" placeholder="Search movies or series..." th:value="${query}"><button type="submit">Search</button></form>
+  </section>
+  <section class="catalogue"><div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2>Explore titles</h2></div><span class="count" th:text="${titles.size()} + ' titles'">0 titles</span></div>
+    <div class="grid" th:if="${!titles.isEmpty()}">
+      <a class="card" th:each="title : ${titles}" th:href="@{/titles/{id}(id=${title.id})}">
+        <span class="type" th:text="${title.type}">MOVIE</span><h3 th:text="${title.name}">Title</h3>
+        <p class="meta"><span th:text="${title.releaseYear}">2024</span><span>·</span><span th:text="${title.genre}">Drama</span></p>
+        <span class="open-link">View details ↗</span>
+      </a>
+    </div>
+    <p class="empty" th:if="${titles.isEmpty()}">No titles found. Try another search.</p>
+  </section>
+</main>
+<footer>Rangmanch · Discover. Track. Discuss.</footer>
+</body></html>
