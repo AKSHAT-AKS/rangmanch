@@ -3,7 +3,7 @@ package com.rangmanch.review;
 import com.rangmanch.title.Title;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "title_reviews")
@@ -32,7 +32,7 @@ public class TitleReview {
     private String body;
 
     @Column(nullable = false, updatable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     protected TitleReview() { }
 
@@ -45,7 +45,7 @@ public class TitleReview {
 
     @PrePersist
     void setCreatedAt() {
-        if (createdAt == null) createdAt = Instant.now();
+        if (createdAt == null) createdAt = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
@@ -53,5 +53,5 @@ public class TitleReview {
     public String getDisplayName() { return displayName; }
     public Integer getRating() { return rating; }
     public String getBody() { return body; }
-    public Instant getCreatedAt() { return createdAt; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
