@@ -40,7 +40,7 @@ The first version will focus on a small, usable set of features:
 
 ## Current status
 
-The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data. Users can add and remove titles from a browser-session watchlist and submit a display-name review with a 1–5 rating. The watchlist is cleared when the session ends. External metadata integration, registered accounts, persistent per-user watchlists, watched/currently-watching status, review editing/deletion, moderation, and broader social discovery remain future work.
+The initial catalogue application is implemented with Java 21, Spring Boot, Thymeleaf, Spring Data JPA, and an H2 file database. It includes searchable sample movie/series records and title detail pages. The catalogue currently uses local seed data. Users can add and remove titles from a browser-session watchlist, track each title as plan to watch, currently watching, or watched, and submit a display-name review with a 1–5 rating. Watchlist entries and statuses are cleared when the session ends. External metadata integration, registered accounts, persistent per-user watchlists, watched/currently-watching status, review editing/deletion, moderation, and broader social discovery remain future work.
 
 **Development safety:** Reviews are currently anonymous apart from a user-entered display name and are not moderated. Do not expose this prototype publicly until authentication, authorization, abuse prevention, and moderation are implemented.
 
