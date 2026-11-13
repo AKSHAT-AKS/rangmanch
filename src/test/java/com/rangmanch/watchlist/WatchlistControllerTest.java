@@ -6,12 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 import com.rangmanch.title.Title;
 import com.rangmanch.title.TitleRepository;
 import com.rangmanch.title.TitleType;
-import com.rangmanch.watchlist.WatchStatus;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +67,26 @@ class WatchlistControllerTest {
         List<Title> titles = (List<Title>) listResult.getModelAndView().getModel().get("titles");
         assertThat(titles).isEmpty();
     }
+    @Test
+    @Transactional
+    void updatingStatusStoresWatchedStateInSession() throws Exception {
+        Title title = titleRepository.saveAndFlush(new Title(
+                "Status Test Film", TitleType.MOVIE, 2025, "Drama", "A test synopsis."));
+        MvcResult addResult = mockMvc.perform(post("/watchlist/{id}", title.getId())).andReturn();
+        MockHttpSession session = (MockHttpSession) addResult.getRequest().getSession(false);
+
+        mockMvc.perform(post("/watchlist/{id}/status", title.getId())
+                        .session(session).param("status", "WATCHED"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/watchlist"));
+
+        MvcResult listResult = mockMvc.perform(get("/watchlist").session(session))
+                .andExpect(status().isOk())
+                .andReturn();
+        @SuppressWarnings("unchecked")
+        java.util.Map<Long, WatchStatus> statuses =
+                (java.util.Map<Long, WatchStatus>) listResult.getModelAndView().getModel().get("statuses");
+        assertThat(statuses).containsEntry(title.getId(), WatchStatus.WATCHED);
+    }
+
 }
