@@ -10,12 +10,20 @@
     <div class="card" th:each="title : ${titles}">
       <span class="type" th:text="${title.type}">MOVIE</span><h3 th:text="${title.name}">Title</h3>
       <p class="meta"><span th:text="${title.releaseYear}">2024</span><span>·</span><span th:text="${title.genre}">Drama</span></p>
+      <p class="watch-status" th:text="${statuses[title.id] != null ? statuses[title.id].label : 'Plan to watch'}">Plan to watch</p>
       <a class="open-link" th:href="@{/titles/{id}(id=${title.id})}">View details ↗</a>
+      <form class="status-form" method="post" th:action="@{/watchlist/{id}/status(id=${title.id})}">
+        <label class="visually-hidden" th:for="'status-' + ${title.id}">Watch status</label>
+        <select th:id="'status-' + ${title.id}" name="status">
+          <option th:each="status : ${watchStatuses}" th:value="${status}" th:text="${status.label}" th:selected="${statuses[title.id] == status}">Status</option>
+        </select>
+        <button class="small-button" type="submit">Update</button>
+      </form>
       <form method="post" th:action="@{/watchlist/{id}/remove(id=${title.id})}"><button class="remove-button" type="submit">Remove</button></form>
     </div>
   </div>
   <div class="empty" th:if="${titles.isEmpty()}"><h3>Your watchlist is empty</h3><p>Browse the catalogue and save titles you want to watch.</p><a class="button" th:href="@{/}">Explore titles</a></div>
-  <p class="session-note">This early version stores the watchlist in your current browser session. It is not yet linked to a registered account.</p>
+  <p class="session-note">This early version stores your watchlist and statuses in the current browser session. They are not yet linked to a registered account.</p>
 </main>
 <footer>Rangmanch · Discover. Track. Discuss.</footer>
 </body></html>
