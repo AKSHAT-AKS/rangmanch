@@ -89,4 +89,26 @@ class WatchlistControllerTest {
         assertThat(statuses).containsEntry(title.getId(), WatchStatus.WATCHED);
     }
 
+    @Test
+    @Transactional
+    void watchlistsAreIsolatedBetweenBrowserSessions() throws Exception {
+        Title title = titleRepository.saveAndFlush(new Title(
+                "Session Isolation Film", TitleType.MOVIE, 2025, "Drama", "A test synopsis."));
+        MvcResult firstAdd = mockMvc.perform(post("/watchlist/{id}", title.getId())).andReturn();
+        MockHttpSession firstSession = (MockHttpSession) firstAdd.getRequest().getSession(false);
+        MockHttpSession secondSession = new MockHttpSession();
+
+        MvcResult firstList = mockMvc.perform(get("/watchlist").session(firstSession))
+                .andExpect(status().isOk()).andReturn();
+        MvcResult secondList = mockMvc.perform(get("/watchlist").session(secondSession))
+                .andExpect(status().isOk()).andReturn();
+
+        @SuppressWarnings("unchecked")
+        List<Title> firstTitles = (List<Title>) firstList.getModelAndView().getModel().get("titles");
+        @SuppressWarnings("unchecked")
+        List<Title> secondTitles = (List<Title>) secondList.getModelAndView().getModel().get("titles");
+        assertThat(firstTitles).extracting(Title::getId).containsExactly(title.getId());
+        assertThat(secondTitles).isEmpty();
+    }
+
 }
